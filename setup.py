@@ -30,7 +30,8 @@ setuptools.setup(name='kobo',
         'resources/templates/*',
         'resources/static/css/*',
         'resources/static/js',
-        'resources/static/images'
+        'resources/static/images',
+        'resources/content/*'
     ]},
     python_requires=">=3.8"
 )

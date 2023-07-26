@@ -1,7 +1,7 @@
 
 
 def gen_paths(cwd):
-    contents_path = cwd / 'contents'
+    contents_path = cwd / 'content'
     templates_path = cwd / 'templates'
     static_path = cwd / 'static'
     redirects_path = cwd / 'redirects.txt'

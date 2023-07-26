@@ -9,9 +9,10 @@ from . import server
 # Global vars
 
 CWD = Path.cwd()
-CONTENTS_PATH, TEMPLATES_PATH, STATIC_PATH, REDIRECTS_PATH, FROZEN_PATH = helper.gen_paths(CWD)
+CONTENT_PATH, TEMPLATES_PATH, STATIC_PATH, REDIRECTS_PATH, FROZEN_PATH = helper.gen_paths(CWD)
 INTERNAL_TEMPLATES_PATH = Path(__file__).parent / 'resources' / 'templates'
 INTERNAL_STATIC_PATH = Path(__file__).parent / 'resources' / 'templates'
+INTERNAL_CONTENT_PATH = Path(__file__).parent / 'resources' / 'content'
 
 # Parser setup
 
@@ -29,7 +30,7 @@ parser.add_argument('--title', type=str)
 # Actually parse the args
 args = parser.parse_args()
 if args.command == 'new':
-    CONTENTS_PATH.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(INTERNAL_CONTENT_PATH, CONTENT_PATH)
     shutil.copytree(INTERNAL_TEMPLATES_PATH, TEMPLATES_PATH)
     shutil.copytree(INTERNAL_STATIC_PATH, STATIC_PATH)
     REDIRECTS_PATH.touch(exist_ok=True)
@@ -46,6 +47,6 @@ if args.command == 'server':
         pass #TODO Implement running gunicorn
 
 if args.command == 'compile':
-    parser.write_tree_save(CONTENTS_PATH, FROZEN_PATH)
+    parser.write_tree_save(CONTENT_PATH, FROZEN_PATH)
     print('Saved routes to `%s`' % str(FROZEN_PATH))
     exit(0)
