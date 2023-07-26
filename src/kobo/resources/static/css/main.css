@@ -1,0 +1,46 @@
+body {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+dl {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+dd, dt {
+    line-height: 1.5;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    display: list-item;
+}
+
+.admonition {
+    padding: 10px;
+    border: 2px solid black;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.admonition-title {
+    margin-top: 0px;
+    font-size: 150%;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+}
+
+.admonition.definition {
+    background-color: #E0F1FB;
+}
+
+.admonition.theorem {
+    background-color: #E5FBE0;
+}

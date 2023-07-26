@@ -1,0 +1,71 @@
+
+/* Base level stuff */
+.grid {
+    display: grid;
+    grid-auto-rows: auto;
+    overflow: auto;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.grid p {
+    margin: 0px;
+}
+
+/* Grid types */
+.grid-1 { grid-template-columns: 1fr; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
+.grid-7 { grid-template-columns: repeat(7, 1fr); }
+.grid-8 { grid-template-columns: repeat(8, 1fr); }
+.grid-9 { grid-template-columns: repeat(9, 1fr); }
+
+/* Image coordinates */
+/*
+img[alt="grid00"] { grid-column: 1; grid-row: 1; }
+img[alt="grid01"] { grid-column: 2; grid-row: 1; }
+img[alt="grid02"] { grid-column: 3; grid-row: 1; }
+img[alt="grid03"] { grid-column: 4; grid-row: 1; }
+img[alt="grid04"] { grid-column: 5; grid-row: 1; }
+img[alt="grid05"] { grid-column: 6; grid-row: 1; }
+img[alt="grid06"] { grid-column: 7; grid-row: 1; }
+img[alt="grid07"] { grid-column: 8; grid-row: 1; }
+img[alt="grid08"] { grid-column: 9; grid-row: 1; }
+
+img[alt="grid10"] { grid-column: 1; grid-row: 2; }
+img[alt="grid11"] { grid-column: 2; grid-row: 2; }
+img[alt="grid12"] { grid-column: 3; grid-row: 2; }
+img[alt="grid13"] { grid-column: 4; grid-row: 2; }
+img[alt="grid14"] { grid-column: 5; grid-row: 2; }
+img[alt="grid15"] { grid-column: 6; grid-row: 2; }
+img[alt="grid16"] { grid-column: 7; grid-row: 2; }
+img[alt="grid17"] { grid-column: 8; grid-row: 2; }
+img[alt="grid18"] { grid-column: 9; grid-row: 2; }
+
+img[alt="grid20"] { grid-column: 1; grid-row: 3; }
+img[alt="grid21"] { grid-column: 2; grid-row: 3; }
+img[alt="grid22"] { grid-column: 3; grid-row: 3; }
+img[alt="grid23"] { grid-column: 4; grid-row: 3; }
+img[alt="grid24"] { grid-column: 5; grid-row: 3; }
+img[alt="grid25"] { grid-column: 6; grid-row: 3; }
+img[alt="grid26"] { grid-column: 7; grid-row: 3; }
+img[alt="grid27"] { grid-column: 8; grid-row: 3; }
+img[alt="grid28"] { grid-column: 9; grid-row: 3; }
+
+img[alt="grid30"] { grid-column: 1; grid-row: 4; }
+img[alt="grid31"] { grid-column: 2; grid-row: 4; }
+img[alt="grid32"] { grid-column: 3; grid-row: 4; }
+img[alt="grid33"] { grid-column: 4; grid-row: 4; }
+img[alt="grid34"] { grid-column: 5; grid-row: 4; }
+img[alt="grid35"] { grid-column: 6; grid-row: 4; }
+img[alt="grid36"] { grid-column: 7; grid-row: 4; }
+img[alt="grid37"] { grid-column: 8; grid-row: 4; }
+img[alt="grid38"] { grid-column: 9; grid-row: 4; }
+*/

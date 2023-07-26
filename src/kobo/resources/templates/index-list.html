@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/grid.css') }}">
+    </head>
+    <body>
+        <div class="markdown-parsed">
+            {{ md_parsed |safe }}
+        </div>        
+    </body>
+</html>
