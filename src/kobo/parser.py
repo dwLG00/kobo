@@ -2,7 +2,7 @@ import markdown
 import datetime
 import bs4
 import os
-from .helper import smart_capitalize
+from .helper import smart_capitalize, read
 import json
 
 md_extensions = [
@@ -39,7 +39,7 @@ def parse_tree_save(contents_path, target_path=None):
 def parse_tree_load(frozen_path):
     with open(frozen_path) as f:
         routes_frozen = json.loads(f.read())
-    dict_to_tuple = lambda entry: (entry.get('route'), entry.get('html_path'), entry.get('title'), entry.get('template'))
+    dict_to_tuple = lambda entry: (entry.get('route'), read(entry.get('html_path')), entry.get('title'), entry.get('template'))
     return [dict_to_tuple(entry) for entry in routes_frozen]
 
 def parse_tree(contents_path, write=False):

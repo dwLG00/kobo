@@ -47,6 +47,6 @@ if args.command == 'server':
         pass #TODO Implement running gunicorn
 
 if args.command == 'compile':
-    parser.write_tree_save(CONTENT_PATH, FROZEN_PATH)
+    parser.parse_tree_save(CONTENT_PATH, FROZEN_PATH)
     print('Saved routes to `%s`' % str(FROZEN_PATH))
     exit(0)
