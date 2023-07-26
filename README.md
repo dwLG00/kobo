@@ -7,8 +7,8 @@ A hugo-like markdown website/blog builder + server
 - No customization -> forced to use the best web theme you've ever seen
 
 # Installation
-1. Clone the repo, then run `cd kobo` and `python3 setup.py install`
-2. Install katex using `npm` by running `npm install katex`
+1. Run `python3 -m pip install katex-md`
+2. Install katex via `npm install katex`
 
 # Usage
 - To start a new project, simply enter the target directory and run `python3 -m katex new`.
