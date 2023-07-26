@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: kobo
-Version: 0.1
-Summary: Markdown Compiler + Server
-Author: Dylan Wallace
-Requires-Python: >=3.8
