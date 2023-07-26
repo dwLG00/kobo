@@ -26,5 +26,11 @@ setuptools.setup(name='kobo',
     author='Dylan Wallace',
     packages=['kobo'],
     package_dir=package_dir,
+    package_data={'kobo': [
+        'resources/templates/*',
+        'resources/static/css/*',
+        'resources/static/js',
+        'resources/static/images'
+    ]},
     python_requires=">=3.8"
 )

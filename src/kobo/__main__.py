@@ -10,7 +10,6 @@ from . import server
 
 CWD = Path.cwd()
 CONTENTS_PATH, TEMPLATES_PATH, STATIC_PATH, REDIRECTS_PATH, FROZEN_PATH = helper.gen_paths(CWD)
-#TODO FIGURE OUT HOW TO ADD THIS PART TO AN ACTUAL PACKAGE
 INTERNAL_TEMPLATES_PATH = Path(__file__).parent / 'resources' / 'templates'
 INTERNAL_STATIC_PATH = Path(__file__).parent / 'resources' / 'templates'
 
@@ -38,11 +37,11 @@ if args.command == 'new':
     exit(0)
 
 if args.command == 'server':
-    kwargs = {'write': args.compile, 'load_from_frozen': args.load, 'title': args.default_title}
+    kwargs = {'write': args.compile, 'load_from_frozen': args.load, 'default_title': args.title}
     server_app = server.create_server(CWD, **kwargs)
     if not args.gunicorn:
         port = args.port if args.port else 8000
-        app.run('0.0.0.0', port=port)
+        server_app.run('0.0.0.0', port=port)
     else:
         pass #TODO Implement running gunicorn
 
