@@ -16,19 +16,19 @@ INTERNAL_CONTENT_PATH = Path(__file__).parent / 'resources' / 'content'
 
 # Parser setup
 
-parser = argparse.ArgumentParser(
+argparser = argparse.ArgumentParser(
     prog='kobo'
 )
-parser.add_argument('command', choices=['new', 'server', 'compile'])
-parser.add_argument('-c', '--compile', action='store_true')
-parser.add_argument('-g', '--gunicorn', action='store_true')
-parser.add_argument('-p', '--port', type=int)
-parser.add_argument('-L', '--load', action='store_true')
-parser.add_argument('--title', type=str)
+argparser.add_argument('command', choices=['new', 'server', 'compile'])
+argparser.add_argument('-c', '--compile', action='store_true')
+argparser.add_argument('-g', '--gunicorn', action='store_true')
+argparser.add_argument('-p', '--port', type=int)
+argparser.add_argument('-L', '--load', action='store_true')
+argparser.add_argument('--title', type=str)
 
 
 # Actually parse the args
-args = parser.parse_args()
+args = argparser.parse_args()
 if args.command == 'new':
     shutil.copytree(INTERNAL_CONTENT_PATH, CONTENT_PATH)
     shutil.copytree(INTERNAL_TEMPLATES_PATH, TEMPLATES_PATH)
