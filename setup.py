@@ -20,6 +20,7 @@ setuptools.setup(
     long_description=README,
     long_description_content_type='text/markdown',
     author='Dylan Wallace',
+    url='https://github.com/dwLG00/kobo/',
     packages=['kobo'],
     package_dir=package_dir,
     package_data={'kobo': [
