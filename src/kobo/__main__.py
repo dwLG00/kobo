@@ -11,7 +11,7 @@ from . import server
 CWD = Path.cwd()
 CONTENT_PATH, TEMPLATES_PATH, STATIC_PATH, REDIRECTS_PATH, FROZEN_PATH = helper.gen_paths(CWD)
 INTERNAL_TEMPLATES_PATH = Path(__file__).parent / 'resources' / 'templates'
-INTERNAL_STATIC_PATH = Path(__file__).parent / 'resources' / 'templates'
+INTERNAL_STATIC_PATH = Path(__file__).parent / 'resources' / 'static'
 INTERNAL_CONTENT_PATH = Path(__file__).parent / 'resources' / 'content'
 
 # Parser setup
@@ -45,6 +45,8 @@ if args.command == 'server':
         server_app.run('0.0.0.0', port=port)
     else:
         pass #TODO Implement running gunicorn
+
+    exit(0)
 
 if args.command == 'compile':
     parser.parse_tree_save(CONTENT_PATH, FROZEN_PATH)

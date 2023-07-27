@@ -7,7 +7,7 @@ A hugo-like markdown website/blog builder + server
 - No customization -> forced to use the best web theme you've ever seen
 
 # Installation
-1. Run `python3 -m pip install katex-md`
+1. Run `python3 -m pip install kobo-md`
 2. Install katex via `npm install katex`
 
 # Usage
