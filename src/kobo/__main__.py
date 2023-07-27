@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 import shutil
 import os
+import multiprocessing
 from . import helper
 from . import parser
 from . import server
@@ -40,11 +41,17 @@ if args.command == 'new':
 if args.command == 'server':
     kwargs = {'write': args.compile, 'load_from_frozen': args.load, 'default_title': args.title}
     server_app = server.create_server(CWD, **kwargs)
+    port = args.port if args.port else 8000
     if not args.gunicorn:
-        port = args.port if args.port else 8000
         server_app.run('0.0.0.0', port=port)
     else:
-        pass #TODO Implement running gunicorn
+        options = {
+            'bind': '0.0.0.0:%s' % port,
+            'workers': min(((multiprocessing.cpu_count() * 2) + 1), 4),
+            'timeout': 120
+        }
+        gunicorn_app = server.gunicornize(server_app, **options)
+        gunicorn_app.run()
 
     exit(0)
 

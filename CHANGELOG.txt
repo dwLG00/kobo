@@ -1,3 +1,6 @@
+Version 0.1.5
+- Added native gunicorn support, via the `-g` flag (e.g. `python3 -m kobo server -g`)
+
 Version 0.1.4
 - Fixed bug where initializing new project would copy template files to static directory
 - Fixed typo in README

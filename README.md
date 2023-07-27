@@ -12,5 +12,5 @@ A hugo-like markdown website/blog builder + server
 
 # Usage
 - To start a new project, simply enter the target directory and run `python3 -m katex new`.
-- To run the server, run `python3 -m katex server` from the project directory.
 - To compile markdown files into html snippets, run `python3 -m katex compile`.
+- To run the server, run `python3 -m katex server` from the project directory.
