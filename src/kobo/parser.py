@@ -61,6 +61,8 @@ def parse_tree(contents_path, write=False):
                         route = os.path.relpath(root, contents_path)
                         if route == '.':
                             route = '/'
+                        elif not route.startswith('/'):
+                            route = '/' + route
                     else:
                         relpath = os.path.relpath(os.path.join(root, file), contents_path) #gets the "effective path"
                         route = '/' + relpath[:-3] # strip off the .md at the end
