@@ -21,11 +21,11 @@ argparser = argparse.ArgumentParser(
     prog='kobo'
 )
 argparser.add_argument('command', choices=['new', 'server', 'compile'])
-argparser.add_argument('-c', '--compile', action='store_true')
-argparser.add_argument('-g', '--gunicorn', action='store_true')
-argparser.add_argument('-p', '--port', type=int)
-argparser.add_argument('-L', '--load', action='store_true')
-argparser.add_argument('--title', type=str)
+argparser.add_argument('-c', '--compile', action='store_true', help='[server] Precompiles markdown files and saves their paths in `routes-freeze.json` (to be loaded via -L)')
+argparser.add_argument('-g', '--gunicorn', action='store_true', help='[server] Runs the server using gunicorn')
+argparser.add_argument('-p', '--port', type=int, help='[server] Specifies the port the server runs on')
+argparser.add_argument('-L', '--load', action='store_true', help='[server] Loads from existing `routes-freeze.json` instead of compiling markdown files on server startup')
+argparser.add_argument('--title', type=str, help='[server] Sets the default title of pages without an explicitly specified title')
 
 
 # Actually parse the args
