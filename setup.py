@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 
 import setuptools
 import os
 import sys
 import pathlib
-
 
 package_dir = {'': 'src'}
 

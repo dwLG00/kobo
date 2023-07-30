@@ -10,7 +10,8 @@ md_extensions = [
     'def_list',
     'admonition',
     'toc',
-    'markdown_katex'
+    'markdown_katex',
+    'nl2br'
 ]
 
 md_extension_configs = {

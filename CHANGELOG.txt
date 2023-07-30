@@ -1,3 +1,6 @@
+Version 0.1.7
+- Added newline breaks (stackoverflow style) as a default extension
+
 Version 0.1.6
 - Added help descriptions to command options
 
