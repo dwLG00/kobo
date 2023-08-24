@@ -26,6 +26,7 @@ argparser.add_argument('-g', '--gunicorn', action='store_true', help='[server] R
 argparser.add_argument('-p', '--port', type=int, help='[server] Specifies the port the server runs on')
 argparser.add_argument('-L', '--load', action='store_true', help='[server] Loads from existing `routes-freeze.json` instead of compiling markdown files on server startup')
 argparser.add_argument('--title', type=str, help='[server] Sets the default title of pages without an explicitly specified title')
+argparser.add_argument('-v', '--verbose', action='store_true', help='[compile,server] Displays debug messages')
 
 
 # Actually parse the args
@@ -56,6 +57,6 @@ if args.command == 'server':
     exit(0)
 
 if args.command == 'compile':
-    parser.parse_tree_save(CONTENT_PATH, FROZEN_PATH)
+    parser.parse_tree_save(CONTENT_PATH, FROZEN_PATH, verbose=args.verbose)
     print('Saved routes to `%s`' % str(FROZEN_PATH))
     exit(0)

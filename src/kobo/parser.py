@@ -28,10 +28,10 @@ admonition_types = [
     'theorem'
 ]
 
-def parse_tree_save(contents_path, target_path=None):
+def parse_tree_save(contents_path, target_path=None, verbose=False):
     if not target_path:
         target_path = os.path.join(contents_path, '..', 'routes-freeze.json')
-    write_tree = parse_tree(contents_path, write=True)
+    write_tree = parse_tree(contents_path, write=True, verbose=verbose)
     tuple_to_dict = lambda route, html_path, title, template: {'route': route, 'html_path': html_path, 'title': title, 'template': template}
     routes_frozen = json.dumps([tuple_to_dict(*t) for t in write_tree])
     with open(target_path, 'w') as f:
@@ -43,9 +43,10 @@ def parse_tree_load(frozen_path):
     dict_to_tuple = lambda entry: (entry.get('route'), read(entry.get('html_path')), entry.get('title'), entry.get('template'))
     return [dict_to_tuple(entry) for entry in routes_frozen]
 
-def parse_tree(contents_path, write=False):
+def parse_tree(contents_path, write=False, verbose=False):
     '''Outputs a list of (route, html, title, template)'''
     tree = []
+    if verbose: print('Scanning `%s`...' % contents_path)
     if write:
         write_tree = []
     for root, dirs, files in os.walk(contents_path):
@@ -54,6 +55,7 @@ def parse_tree(contents_path, write=False):
             if file == 'index-blurb.md':
                 continue
             if file.endswith('.md'): # only parse mds!
+                if verbose: print('Found ``' % os.path.join(root, file))
                 (html, title, isdraft, route, template) = parse(os.path.join(root, file))
                 html_path = os.path.join(root, file).replace('.md', '.html')
 
@@ -73,11 +75,13 @@ def parse_tree(contents_path, write=False):
                     else:
                         template = 'page.html'
                 if not isdraft:
+                    if verbose: print('Saving %s' % ((route, html, title, template),)) #weird paradigm
                     root_routes.append((route, html, title, template))
                     if write:
                         with open(html_path, 'w') as f:
                             f.write(html)
                         write_tree.append((route, html_path, title, template))
+                elif verbose: print('Draft, skipping...')
 
         if 'index.md' not in files:
             # Add in an index
@@ -91,6 +95,7 @@ def parse_tree(contents_path, write=False):
             template = 'index-list.html'
             root_routes.append((route, html, title, template))
             html_path = os.path.join(root, 'index.html')
+            if verbose: print('Saving %s' % ((route, html, title, template),))
             if write:
                 with open(html_path, 'w') as f:
                     f.write(html)
