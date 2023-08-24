@@ -55,7 +55,7 @@ def parse_tree(contents_path, write=False, verbose=False):
             if file == 'index-blurb.md':
                 continue
             if file.endswith('.md'): # only parse mds!
-                if verbose: print('Found ``' % os.path.join(root, file))
+                if verbose: print('Found `%s`' % os.path.join(root, file))
                 (html, title, isdraft, route, template) = parse(os.path.join(root, file))
                 html_path = os.path.join(root, file).replace('.md', '.html')
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-VERSION = '0.1.8'
+VERSION = '0.1.9'
 
 import setuptools
 import os
