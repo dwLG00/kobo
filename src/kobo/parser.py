@@ -75,7 +75,7 @@ def parse_tree(contents_path, write=False, verbose=False):
                     else:
                         template = 'page.html'
                 if not isdraft:
-                    if verbose: print('Saving %s' % ((route, html, title, template),)) #weird paradigm
+                    if verbose: print('Saving %s' % ((route, html_path, title, template),)) #weird paradigm
                     root_routes.append((route, html, title, template))
                     if write:
                         with open(html_path, 'w') as f:
@@ -95,7 +95,7 @@ def parse_tree(contents_path, write=False, verbose=False):
             template = 'index-list.html'
             root_routes.append((route, html, title, template))
             html_path = os.path.join(root, 'index.html')
-            if verbose: print('Saving %s' % ((route, html, title, template),))
+            if verbose: print('Saving %s' % ((route, html_path, title, template),))
             if write:
                 with open(html_path, 'w') as f:
                     f.write(html)

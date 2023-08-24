@@ -1,3 +1,6 @@
+Version 0.1.10
+- --verbose is not _that_ verbose anymore
+
 Version 0.1.9
 - Fixed critical bug in --verbose option
 
