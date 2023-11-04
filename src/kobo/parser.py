@@ -49,6 +49,7 @@ def parse_tree(contents_path, write=False, verbose=False):
     if verbose: print('Scanning `%s`...' % contents_path)
     if write:
         write_tree = []
+
     for root, dirs, files in os.walk(contents_path):
         root_routes = []
         for file in files:
@@ -83,14 +84,19 @@ def parse_tree(contents_path, write=False, verbose=False):
                         write_tree.append((route, html_path, title, template))
                 elif verbose: print('Draft, skipping...')
 
+        dir_routes = []
+        for dir in dirs:
+            relpath = os.path.relpath(os.path.join(root, dir), contents_path)
+            dir_routes.append((dir, '/' + relpath))
+
         if 'index.md' not in files:
             # Add in an index
 
             route = '/' + os.path.relpath(root, contents_path)
             if 'index-blurb.md' in files:
-                blurb_html, html = generate_index(root_routes, blurb_path=os.path.join(root, 'index-blurb.md'))
+                blurb_html, html = generate_index(root_routes, blurb_path=os.path.join(root, 'index-blurb.md'), dirs=dir_routes)
             else:
-                blurb_html, html = generate_index(root_routes)
+                blurb_html, html = generate_index(root_routes, dirs=dir_routes)
             title = 'index'
             template = 'index-list.html'
             root_routes.append((route, html, title, template))
@@ -105,9 +111,15 @@ def parse_tree(contents_path, write=False, verbose=False):
         return write_tree
     return tree
 
-def generate_index(routes, blurb_path=None):
+def generate_index(routes, blurb_path=None, dirs=[]):
     index_md_atom = '- [%s](%s)'
+    index_md_atom_dir = '- [Dir: %s](%s)'
     atoms = [index_md_atom % (title, route) for (route, html, title, template) in routes]
+
+    for dir in dirs:
+        atoms.append(index_md_atom_dir % dir)
+
+    atoms.sort() # Make it go in alphabetical order
     index_md = '\n'.join(atoms)
     index_html, _, _, _, _ = __parse(index_md)
     if blurb_path:
