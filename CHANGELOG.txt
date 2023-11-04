@@ -1,3 +1,6 @@
+Version 0.1.12
+- Index now doesn't sort directories along with files
+
 Version 0.1.11
 - Auto-generated index now sorts entries
 - Added directories to auto-generated index (does not check for route)

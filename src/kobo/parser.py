@@ -113,13 +113,14 @@ def parse_tree(contents_path, write=False, verbose=False):
 
 def generate_index(routes, blurb_path=None, dirs=[]):
     index_md_atom = '- [%s](%s)'
-    index_md_atom_dir = '- [Dir: %s](%s)'
+    index_md_atom_dir = '- Dir: [%s](%s)'
     atoms = [index_md_atom % (title, route) for (route, html, title, template) in routes]
+    atoms.sort() # Make it go in alphabetical order
+    atoms.append('') # just a way to insert an extra newline
 
     for dir in dirs:
         atoms.append(index_md_atom_dir % dir)
 
-    atoms.sort() # Make it go in alphabetical order
     index_md = '\n'.join(atoms)
     index_html, _, _, _, _ = __parse(index_md)
     if blurb_path:
