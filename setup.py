@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-VERSION = '0.1.12'
+VERSION = '0.1.16'
 
 import setuptools
 import os

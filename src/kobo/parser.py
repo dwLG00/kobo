@@ -4,6 +4,7 @@ import bs4
 import os
 from .helper import smart_capitalize, read
 import json
+import hashlib
 
 md_extensions = [
     'meta',
@@ -31,8 +32,15 @@ admonition_types = [
 def parse_tree_save(contents_path, target_path=None, verbose=False):
     if not target_path:
         target_path = os.path.join(contents_path, '..', 'routes-freeze.json')
-    write_tree = parse_tree(contents_path, write=True, verbose=verbose)
-    tuple_to_dict = lambda route, html_path, title, template: {'route': route, 'html_path': html_path, 'title': title, 'template': template}
+
+    with open(target_path) as f:
+        frozen_routes = json.loads(f.read())
+
+    write_tree = parse_tree(contents_path, write=True, verbose=verbose, check_against=frozen_routes)
+    tuple_to_dict = lambda route, html_path, title, template, filepath, filehash: {
+        'route': route, 'html_path': html_path, 'title': title,
+        'template': template, 'filepath': filepath, 'filehash': filehash
+    }
     routes_frozen = json.dumps([tuple_to_dict(*t) for t in write_tree])
     with open(target_path, 'w') as f:
         f.write(routes_frozen)
@@ -43,7 +51,7 @@ def parse_tree_load(frozen_path):
     dict_to_tuple = lambda entry: (entry.get('route'), read(entry.get('html_path')), entry.get('title'), entry.get('template'))
     return [dict_to_tuple(entry) for entry in routes_frozen]
 
-def parse_tree(contents_path, write=False, verbose=False):
+def parse_tree(contents_path, write=False, verbose=False, check_against=None):
     '''Outputs a list of (route, html, title, template)'''
     tree = []
     if verbose: print('Scanning `%s`...' % contents_path)
@@ -56,9 +64,35 @@ def parse_tree(contents_path, write=False, verbose=False):
             if file == 'index-blurb.md':
                 continue
             if file.endswith('.md'): # only parse mds!
-                if verbose: print('Found `%s`' % os.path.join(root, file))
-                (html, title, isdraft, route, template) = parse(os.path.join(root, file))
-                html_path = os.path.join(root, file).replace('.md', '.html')
+                filepath = os.path.join(root, file)
+                if verbose: print('Found `%s`' % filepath)
+                filehash = get_file_hash(filepath)
+                if check_against: #If hash is unchanged, don't recompile -> saves time
+                    if verbose: print('Checking against routes-freeze...')
+                    break_flag = False
+                    for route_dict in check_against:
+                        if route_dict.get('filepath') == filepath:
+                            if filehash == route_dict.get('filehash'): #hash same -> skip file
+                                break_flag = True
+
+                                route = route_dict.get('route')
+                                html_path = route_dict.get('html_path')
+                                title = route_dict.get('title')
+                                template = route_dict.get('template')
+                                with open(html_path) as f:
+                                    html = f.read()
+
+                                root_routes.append((route, html, title, template))
+                                if write: #no need to actually write the content (because we just read it)
+                                    write_tree.append((route, html_path, title, template, filepath, filehash))
+                            elif verbose: print('No matches found')
+                            break
+                    if break_flag:
+                        if verbose: print('Hash for path %s unchanged, skipping...' % filepath)
+                        break
+
+                (html, title, isdraft, route, template) = parse(filepath)
+                html_path = filepath.replace('.md', '.html') #not good practice, but it's okay for now (famous last words)
 
                 if not route:
                     if file == 'index.md': # index -> parent dir should be the endpoint
@@ -68,7 +102,7 @@ def parse_tree(contents_path, write=False, verbose=False):
                         elif not route.startswith('/'):
                             route = '/' + route
                     else:
-                        relpath = os.path.relpath(os.path.join(root, file), contents_path) #gets the "effective path"
+                        relpath = os.path.relpath(filepath, contents_path) #gets the "effective path"
                         route = '/' + relpath[:-3] # strip off the .md at the end
                 if not template:
                     if file == 'index.md':
@@ -81,7 +115,7 @@ def parse_tree(contents_path, write=False, verbose=False):
                     if write:
                         with open(html_path, 'w') as f:
                             f.write(html)
-                        write_tree.append((route, html_path, title, template))
+                        write_tree.append((route, html_path, title, template, filepath, filehash))
                 elif verbose: print('Draft, skipping...')
 
         dir_routes = []
@@ -105,7 +139,7 @@ def parse_tree(contents_path, write=False, verbose=False):
             if write:
                 with open(html_path, 'w') as f:
                     f.write(html)
-                write_tree.append((route, html_path, title, template))
+                write_tree.append((route, html_path, title, template, None, None))
         tree.extend(root_routes)
     if write:
         return write_tree
@@ -189,3 +223,11 @@ def image_alt_hover(soup):
         if not image_tag.has_attr('title'):
             image_tag['title'] = image_tag['alt']
     return soup
+
+def get_file_hash(filepath):
+    with open(filepath) as f:
+        file_contents = f.read()
+    return get_hash(file_contents)
+
+def get_hash(file_contents):
+    return hashlib.md5(file_contents.encode('utf-8')).hexdigest()

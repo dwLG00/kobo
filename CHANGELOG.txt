@@ -1,3 +1,7 @@
+Version 0.1.16
+- routes-freeze.json now stores md5 hashes of markdown files
+- Recompiling markdown now checks files against stored md5 hashes and ignores files with no change
+
 Version 0.1.12
 - Index now doesn't sort directories along with files
 
