@@ -1,3 +1,6 @@
+Version 0.1.17
+- Fixed bug where finding a file with unchanged hash skipped the rest of the entire dir
+
 Version 0.1.16
 - routes-freeze.json now stores md5 hashes of markdown files
 - Recompiling markdown now checks files against stored md5 hashes and ignores files with no change

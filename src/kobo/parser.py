@@ -61,11 +61,11 @@ def parse_tree(contents_path, write=False, verbose=False, check_against=None):
     for root, dirs, files in os.walk(contents_path):
         root_routes = []
         for file in files:
+            filepath = os.path.join(root, file)
+            if verbose: print('Found `%s`' % filepath)
             if file == 'index-blurb.md':
                 continue
             if file.endswith('.md'): # only parse mds!
-                filepath = os.path.join(root, file)
-                if verbose: print('Found `%s`' % filepath)
                 filehash = get_file_hash(filepath)
                 if check_against: #If hash is unchanged, don't recompile -> saves time
                     if verbose: print('Checking against routes-freeze...')
@@ -89,7 +89,7 @@ def parse_tree(contents_path, write=False, verbose=False, check_against=None):
                             break
                     if break_flag:
                         if verbose: print('Hash for path %s unchanged, skipping...' % filepath)
-                        break
+                        continue
 
                 (html, title, isdraft, route, template) = parse(filepath)
                 html_path = filepath.replace('.md', '.html') #not good practice, but it's okay for now (famous last words)
@@ -117,6 +117,8 @@ def parse_tree(contents_path, write=False, verbose=False, check_against=None):
                             f.write(html)
                         write_tree.append((route, html_path, title, template, filepath, filehash))
                 elif verbose: print('Draft, skipping...')
+            else:
+                if verbose: print('Not markdown, skipping...')
 
         dir_routes = []
         for dir in dirs:
