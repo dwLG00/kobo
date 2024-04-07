@@ -10,6 +10,8 @@ A hugo-like markdown website/blog builder + server
 1. Run `python3 -m pip install kobo-md`
 2. Install katex via `npm install katex`
 
+See [dylwall.com](http://dylwall.com) for a sample site built using kobo :)
+
 # Usage
 - To start a new project, simply enter the target directory and run `python3 -m katex new`.
 - To compile markdown files into html snippets, run `python3 -m katex compile`.
