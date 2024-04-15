@@ -4,7 +4,8 @@ A hugo-like markdown website/blog builder + server
 # Features
 - Built with Flask
 - Native support for markdown using katex
-- No customization -> forced to use the best web theme you've ever seen!
+- Lots of out-of-the-box functionality
+- Extensive customization options and extendibility
 
 # Installation
 1. Run `python3 -m pip install kobo-md`
