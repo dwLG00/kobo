@@ -191,6 +191,13 @@ def __parse(data, classes=md_css_classes):
 
     return (postprocessed_html, title, isdraft, route, template)
 
+def parse_single(filepath):
+    with open(filepath) as f:
+        contents = f.read()
+
+    (html, title, isdraft, route, template) = __parse(contents)
+    return html
+
 def apply_css_rules(soup, css_classes):
     for tagtype in css_classes.keys():
         tags = soup.find_all(tagtype)
