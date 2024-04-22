@@ -8,20 +8,50 @@ import os
 DEBUG=False
 
 class MarkdownView(View):
+    '''MarkdownView View
+
+    This class should only be instantiated through cls.add_view(), as an argument for app.add_url_rule().
+    Arguments:
+    html     -- string containing markdown parsed to html to be inserted in template
+    template -- relative route to template file
+    title    -- title to be used for route
+    '''
     def __init__(self, html, template, title):
         self.html = html
         self.template = template
         self.title = title
     def dispatch_request(self):
+        '''Renders the specified template with markdown inserted and with specified title'''
         return render_template(self.template, md_parsed=self.html, title=self.title)
 
 class RedirectView(View):
+    '''RedirectView View
+
+    This class shoudl only be instantiated through cls.add_view(), as an argument for app.add_url_rule().
+    Arguments:
+    target -- url to redirect to
+    '''
     def __init__(self, target):
         self.target_url = target
     def dispatch_request(self):
         return redirect(self.target_url)
 
 def create_server(root_directory, **kwargs):
+    '''Returns a flask app object with routes pointing to compiled markdown files
+
+    Arguments:
+    root_directory     -- path to root directory of project, containing template and static directories
+
+    Keyword Arguments:
+    default_title      -- default title given to pages without specified title (default 'my-site')
+    write              -- if true, parser saves route tree to '<root>/routes-freeze.json' to be
+        read from later (default False)
+    load_from_frozen   -- if true, loads route tree from '<root>/routes-freeze.json' instead of
+        compiling tree again (default False)
+    custom_view_routes -- dictionary of custom <route, (view, *arguments)> (default {})
+    custom_view_route_override -- if true, routes specified in custom_view_routes will override (default
+        False)
+    '''
     template_folder = root_directory / 'templates'
     static_folder = root_directory / 'static'
     contents_folder = root_directory / 'contents'
@@ -49,7 +79,9 @@ def create_server(root_directory, **kwargs):
         else:
             tree = parser.parse_tree(contents_folder) # Outputs a list of routes and their paired html
 
+    routes_added = []
     for route, html, title, template in tree:
+        tree_routes.append(route)
         if route in custom_view_routes.keys() and custom_view_route_override: continue
         if DEBUG:
             print('Route %s (%s): %s' % (route, title, template))
@@ -57,6 +89,7 @@ def create_server(root_directory, **kwargs):
             app.add_url_rule(route, view_func=MarkdownView.as_view(route_to_funcname(route), html, template, title=title))
         else:
             app.add_url_rule(route, view_func=MarkdownView.as_view(route_to_funcname(route), html, template, title=default_title))
+        routes_added.append(route)
 
     redirects_dict = redirects.load_redirects(redirects_path)
     for partial_route in redirects_dict.keys():
@@ -65,9 +98,12 @@ def create_server(root_directory, **kwargs):
         if DEBUG:
             print('Route %s: Redirect %s' % (route, redirects_dict[partial_route]))
         app.add_url_rule(route, view_func=RedirectView.as_view(route_to_funcname(route), redirects_dict[partial_route]))
+        routes_added.append(route)
 
     for route in custom_view_routes.keys():
         view, *arguments = custom_view_routes[route]
+        if not custom_view_route_override and route in routes_added:
+            continue
         app.add_url_rule(route, view_func=view.as_view(*arguments))
 
     @app.errorhandler(404)
