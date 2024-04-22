@@ -1,3 +1,7 @@
+Version 0.1.18
+- Added ability to add routes with custom views through server.create_server()
+- Added docstrings for classes in server.*
+
 Version 0.1.17
 - Fixed bug where finding a file with unchanged hash skipped the rest of the entire dir
 
