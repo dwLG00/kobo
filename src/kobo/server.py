@@ -35,6 +35,9 @@ def create_server(root_directory, **kwargs):
     if load_from_frozen == True:
         load_from_frozen = frozen_path
 
+    custom_view_routes = kwargs.get('custom_view_routes', {}) # Dictionary of routes and tuple of view and args
+    custom_view_route_override = kwargs.get('custom_view_route_override', False)
+
     def route_to_funcname(route):
         return route.replace('/', '_').replace('-', '_')
 
@@ -47,6 +50,7 @@ def create_server(root_directory, **kwargs):
             tree = parser.parse_tree(contents_folder) # Outputs a list of routes and their paired html
 
     for route, html, title, template in tree:
+        if route in custom_view_routes.keys() and custom_view_route_override: continue
         if DEBUG:
             print('Route %s (%s): %s' % (route, title, template))
         if title:
@@ -57,9 +61,14 @@ def create_server(root_directory, **kwargs):
     redirects_dict = redirects.load_redirects(redirects_path)
     for partial_route in redirects_dict.keys():
         route = os.path.join('/redirect/', partial_route)
+        if route in custom_view_routes.keys() and custom_view_route_override: continue
         if DEBUG:
             print('Route %s: Redirect %s' % (route, redirects_dict[partial_route]))
         app.add_url_rule(route, view_func=RedirectView.as_view(route_to_funcname(route), redirects_dict[partial_route]))
+
+    for route in custom_view_routes.keys():
+        view, *arguments = custom_view_routes[route]
+        app.add_url_rule(route, view_func=view.as_view(*arguments))
 
     @app.errorhandler(404)
     def page_not_found(e):
