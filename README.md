@@ -46,3 +46,27 @@ template: homepage.html
 - When pages in kobo are processed, they are inserted into [Jinja](https://jinja.palletsprojects.com/) files with a specific format.
 - Index files use the `index.html` template and all other files use the `page.html` template by default. You can specify which template to use for a page in the markdown header.
 - Template files are stored in the `templates` directory.
+
+## Running
+- To start up a server, just run `python3 -m kobo server`!
+- Run `python3 -m kobo -h`
+
+### Custom Configuration and Gunicorn
+You can run the kobo flask app in your own scripts by importing `kobo.server.create_server`:
+
+```
+from kobo.server import create_server
+from pathlib import Path
+
+kwargs = {
+    # Add your desired keyword arguments here
+    'load_from_frozen': True,
+    'default_title': "Dylan's Blog"
+}
+
+app = create_server(Path('/my/blog/root/directory'), **kwargs)
+
+app.run('0.0.0.0', port=8080)
+```
+
+Alternatively, you can run kobo using gunicorn instead. All you have to do is omit the last line, and run `gunicorn -w 2 --bind 0.0.0.0:8000 'main:app'`.
