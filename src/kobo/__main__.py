@@ -27,7 +27,7 @@ argparser.add_argument('-p', '--port', type=int, help='[server] Specifies the po
 argparser.add_argument('-L', '--load', action='store_true', help='[server] Loads from existing `routes-freeze.json` instead of compiling markdown files on server startup')
 argparser.add_argument('--title', type=str, help='[server] Sets the default title of pages without an explicitly specified title')
 argparser.add_argument('-s', '--single-file', dest='singlefile', action='store_true', help='[compile] Compiles single file and outputs to stdout or specified file (-i required)')
-argparser.add_argument('-i', '--input', dest='in', type=str, help='[compile -s] Specifies input file for compile -s')
+argparser.add_argument('-i', '--input', dest='in_', type=str, help='[compile -s] Specifies input file for compile -s')
 argparser.add_argument('-o', '--output', dest='out', type=str, help='[compile -s] Specifies output destination for compile -s')
 argparser.add_argument('-v', '--verbose', action='store_true', help='[compile,server] Displays debug messages')
 
@@ -61,9 +61,9 @@ if args.command == 'server':
 
 if args.command == 'compile':
     if args.singlefile:
-        if not args.in:
+        if not args.in_:
             raise argparse.ArgumentError('flag `--input` must be specified')
-        res = parser.parse_single(args.in)
+        res = parser.parse_single(args.in_)
         if not args.out:
             print(res)
         else:
