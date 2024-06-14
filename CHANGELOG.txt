@@ -1,3 +1,6 @@
+Version 0.1.18
+- Fixed bug where attribute name is incompatible with newer versions of python
+
 Version 0.1.17
 - Fixed bug where finding a file with unchanged hash skipped the rest of the entire dir
 
