@@ -1,4 +1,4 @@
-Version 0.1.18
+Version 0.1.19
 - Fixed bug where attribute name is incompatible with newer versions of python
 
 Version 0.1.17
