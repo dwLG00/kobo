@@ -1,3 +1,6 @@
+Version 0.1.19
+- Fixed bug where attribute name is incompatible with newer versions of python
+
 Version 0.1.18
 - Added ability to add routes with custom views through server.create_server()
 - Added docstrings for classes in server.*
