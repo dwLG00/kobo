@@ -34,8 +34,11 @@ def parse_tree_save(contents_path, target_path=None, verbose=False):
     if not target_path:
         target_path = os.path.join(contents_path, '..', 'routes-freeze.json')
 
-    with open(target_path) as f:
-        frozen_routes = json.loads(f.read())
+    if os.path.isfile(target_path):
+        with open(target_path) as f:
+            frozen_routes = json.loads(f.read())
+    else:
+        frozen_routes = None
 
     write_tree = parse_tree(contents_path, write=True, verbose=verbose, check_against=frozen_routes)
     tuple_to_dict = lambda route, html_path, title, template, filepath, filehash: {
