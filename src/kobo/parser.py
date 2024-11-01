@@ -97,6 +97,7 @@ def parse_tree(contents_path, write=False, verbose=False, check_against=None):
 
                 (html, title, isdraft, route, template) = parse(filepath)
                 html_path = filepath.replace('.md', '.html') #not good practice, but it's okay for now (famous last words)
+                if verbose: print('> title: %s, isdraft: %s, route: %s, template: %s, html_path: %s' % (title, isdraft, route, template, html_path))
 
                 if not route:
                     if file == 'index.md': # index -> parent dir should be the endpoint
