@@ -1,3 +1,6 @@
+Version 0.1.20
+- Added footnote support
+
 Version 0.1.19
 - Fixed bug where attribute name is incompatible with newer versions of python
 

@@ -12,7 +12,8 @@ md_extensions = [
     'admonition',
     'toc',
     'markdown_katex',
-    'nl2br'
+    'nl2br',
+    'footnotes'
 ]
 
 md_extension_configs = {
@@ -173,9 +174,11 @@ def parse(path, classes=md_css_classes):
         data = f.read()
     return __parse(data, classes=classes)
 
-def __parse(data, classes=md_css_classes):
-    md = markdown.Markdown(extensions=md_extensions, extension_configs=md_extension_configs)
+def __parse(data, classes=md_css_classes, md=None, reset=True):
+    if not md:
+        md = markdown.Markdown(extensions=md_extensions, extension_configs=md_extension_configs)
     raw_html = md.convert(data)
+    if reset: md.reset()
 
     metadata = md.Meta
     isdraft = (metadata.get('draft', ['true']) == ['true'])
