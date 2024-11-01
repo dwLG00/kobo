@@ -182,13 +182,14 @@ def __parse(data, classes=md_css_classes, md=None, reset=True):
     if not md:
         md = markdown.Markdown(extensions=md_extensions, extension_configs=md_extension_configs)
     raw_html = md.convert(data)
-    if reset: md.reset()
 
     metadata = md.Meta
     isdraft = (metadata.get('draft', ['true']) == ['true'])
     title = metadata.get('title', [None])[0]
     route = metadata.get('route', [None])[0]
     template = metadata.get('template', [None])[0]
+
+    if reset: md.reset()
 
     soup = bs4.BeautifulSoup(raw_html)
     soup = apply_css_rules(soup, classes)

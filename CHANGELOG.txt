@@ -1,4 +1,5 @@
-Version 0.1.24
+Version 0.1.25
+- Fixed bug where metadata was getting flushed
 
 Version 0.1.23
 - Using frozen paths doesn't throw an error if routes-freeze.json doesn't exist

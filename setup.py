@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-VERSION = '0.1.24'
+VERSION = '0.1.25'
 
 import setuptools
 import os
