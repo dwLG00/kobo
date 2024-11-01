@@ -1,3 +1,6 @@
+Version 0.1.22
+- Fixed bug where server wouldn't start correctly
+
 Version 0.1.21
 - Fixed execution commands in README
 

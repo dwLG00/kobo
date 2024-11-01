@@ -81,7 +81,6 @@ def create_server(root_directory, **kwargs):
 
     routes_added = []
     for route, html, title, template in tree:
-        tree_routes.append(route)
         if route in custom_view_routes.keys() and custom_view_route_override: continue
         if DEBUG:
             print('Route %s (%s): %s' % (route, title, template))
