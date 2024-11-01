@@ -1,3 +1,6 @@
+Version 0.1.21
+- Fixed execution commands in README
+
 Version 0.1.20
 - Added footnote support
 

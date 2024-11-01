@@ -14,9 +14,9 @@ A hugo-like markdown website/blog builder + server
 See [dylwall.com](http://dylwall.com) for a sample site built using kobo :)
 
 # Usage
-- To start a new project, simply enter the target directory and run `python3 -m katex new`.
-- To compile markdown files into html snippets, run `python3 -m katex compile`.
-- To run the server, run `python3 -m katex server` from the project directory.
+- To start a new project, simply enter the target directory and run `python3 -m kobo new`.
+- To compile markdown files into html snippets, run `python3 -m kobo compile`.
+- To run the server, run `python3 -m kobo server` from the project directory.
 
 ## Adding Content
 - To create a page on your site, just make a markdown file in the `content` directory.
